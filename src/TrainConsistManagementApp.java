@@ -1,4 +1,6 @@
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
 public class TrainConsistManagementApp {
 
@@ -9,36 +11,35 @@ public class TrainConsistManagementApp {
         System.out.println("   === Train Consist Management App ===");
         System.out.println("==========================================\n");
 
-        // UC5: Preserve Insertion Order of Bogies (LinkedHashSet)
+        // UC6: Map Bogie to Capacity (HashMap)
         System.out.println("==========================================");
-        System.out.println(" UC5 - Preserve Insertion Order of Bogies ");
+        System.out.println(" UC6 - Map Bogie to Capacity (HashMap) ");
         System.out.println("==========================================\n");
 
-        // LinkedHashSet: Maintains order AND ensures uniqueness
-        Set<String> formation = new LinkedHashSet<>();
+        // HashMap stores data in key -> value format
+        Map<String, Integer> capacityMap = new HashMap<>();
 
-        System.out.println("Enter bogies to attach (e.g., Engine, Sleeper, Cargo, Guard).");
-        System.out.println("Try entering 'Sleeper' twice to see the deduplication:\n");
+        System.out.println("Enter the number of bogies you want to map:");
+        int count = Integer.parseInt(scanner.nextLine());
 
-        for (int i = 1; i <= 5; i++) {
-            System.out.print("Attach Bogie " + i + ": ");
-            String bogie = scanner.nextLine();
+        for (int i = 1; i <= count; i++) {
+            System.out.print("Enter Bogie Name (Key) " + i + ": ");
+            String bogieName = scanner.nextLine();
 
-            boolean isNew = formation.add(bogie);
-            if (!isNew) {
-                System.out.println("--> [System Alert]: " + bogie + " is already attached. Duplicate ignored.");
-            }
+            System.out.print("Enter Capacity (Value) for " + bogieName + ": ");
+            int capacity = Integer.parseInt(scanner.nextLine());
+
+            // put() Method inserts the key-value pair
+            capacityMap.put(bogieName, capacity);
         }
 
-        System.out.println("\n------------------------------------------");
-        System.out.println("Final Train Formation:");
-        System.out.println(formation);
+        System.out.println("\nBogie Capacity Details:");
+        // entrySet() allows us to iterate through both keys and values
+        for (Map.Entry<String, Integer> entry : capacityMap.entrySet()) {
+            System.out.println(entry.getKey() + " -> " + entry.getValue());
+        }
 
-        System.out.println("\nNote:");
-        System.out.println("LinkedHashSet preserves insertion order and removes duplicates automatically.");
-        System.out.println("------------------------------------------");
-
-        System.out.println("\nUC5 formation setup completed...");
+        System.out.println("\nUC6 bogie-capacity mapping completed...");
         scanner.close();
     }
 }
