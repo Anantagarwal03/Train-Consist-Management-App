@@ -9,48 +9,36 @@ public class TrainConsistManagementApp {
         System.out.println("   === Train Consist Management App ===");
         System.out.println("==========================================\n");
 
-        // UC4: Maintain Ordered Bogie Consist (LinkedList)
+        // UC5: Preserve Insertion Order of Bogies (LinkedHashSet)
         System.out.println("==========================================");
-        System.out.println(" UC4 - Maintain Ordered Bogie Consist ");
+        System.out.println(" UC5 - Preserve Insertion Order of Bogies ");
         System.out.println("==========================================\n");
 
-        // LinkedList allows us to use addFirst, addLast, etc.
-        LinkedList<String> trainConsist = new LinkedList<>();
+        // LinkedHashSet: Maintains order AND ensures uniqueness
+        Set<String> formation = new LinkedHashSet<>();
 
-        // 1. Initial Setup
-        System.out.println("Enter 5 initial bogies (Recommended: Engine, Sleeper, AC, Cargo, Guard):");
+        System.out.println("Enter bogies to attach (e.g., Engine, Sleeper, Cargo, Guard).");
+        System.out.println("Try entering 'Sleeper' twice to see the deduplication:\n");
+
         for (int i = 1; i <= 5; i++) {
-            System.out.print("Bogie " + i + ": ");
-            trainConsist.add(scanner.nextLine());
+            System.out.print("Attach Bogie " + i + ": ");
+            String bogie = scanner.nextLine();
+
+            boolean isNew = formation.add(bogie);
+            if (!isNew) {
+                System.out.println("--> [System Alert]: " + bogie + " is already attached. Duplicate ignored.");
+            }
         }
 
-        System.out.println("\nInitial Train Consist:");
-        System.out.println(trainConsist);
+        System.out.println("\n------------------------------------------");
+        System.out.println("Final Train Formation:");
+        System.out.println(formation);
 
-        // 2. Positional Insertion
-        System.out.print("\nEnter a special bogie to insert at position 2 (e.g., Pantry Car): ");
-        String specialBogie = scanner.nextLine();
-        trainConsist.add(2, specialBogie);
+        System.out.println("\nNote:");
+        System.out.println("LinkedHashSet preserves insertion order and removes duplicates automatically.");
+        System.out.println("------------------------------------------");
 
-        System.out.println("After Inserting '" + specialBogie + "' at position 2:");
-        System.out.println(trainConsist);
-
-        // 3. Removing First and Last
-        System.out.println("\nDetaching the first and last bogies for maintenance...");
-        if (!trainConsist.isEmpty()) {
-            String first = trainConsist.removeFirst();
-            System.out.println("Removed First: " + first);
-        }
-        if (!trainConsist.isEmpty()) {
-            String last = trainConsist.removeLast();
-            System.out.println("Removed Last: " + last);
-        }
-
-        // Final State
-        System.out.println("\nFinal Ordered Train Consist:");
-        System.out.println(trainConsist);
-
-        System.out.println("\nUC4 ordered consist operations completed...");
+        System.out.println("\nUC5 formation setup completed...");
         scanner.close();
     }
 }
