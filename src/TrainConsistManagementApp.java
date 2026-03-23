@@ -1,8 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 public class TrainConsistManagementApp {
 
@@ -13,35 +9,48 @@ public class TrainConsistManagementApp {
         System.out.println("   === Train Consist Management App ===");
         System.out.println("==========================================\n");
 
-        // UC1 & UC2: List Management
-        List<String> passengerBogies = new ArrayList<>();
-        passengerBogies.add("Sleeper");
-        passengerBogies.add("First Class");
-
-        // UC3: Unique Bogie ID Tracking (HashSet)
+        // UC4: Maintain Ordered Bogie Consist (LinkedList)
         System.out.println("==========================================");
-        System.out.println(" UC3 - Track Unique Bogie IDs (HashSet) ");
+        System.out.println(" UC4 - Maintain Ordered Bogie Consist ");
         System.out.println("==========================================\n");
 
-        Set<String> bogieIds = new HashSet<>();
+        // LinkedList allows us to use addFirst, addLast, etc.
+        LinkedList<String> trainConsist = new LinkedList<>();
 
-        System.out.println("Enter 4 Bogie IDs (Try entering a duplicate to test):");
-        for (int i = 1; i <= 4; i++) {
-            System.out.print("Enter ID for Bogie " + i + ": ");
-            String id = scanner.nextLine();
-
-            // add() returns false if the element is already present
-            boolean isAdded = bogieIds.add(id);
-            if (!isAdded) {
-                System.out.println("--> Alert: Duplicate ID '" + id + "' ignored by System!");
-            }
+        // 1. Initial Setup
+        System.out.println("Enter 5 initial bogies (Recommended: Engine, Sleeper, AC, Cargo, Guard):");
+        for (int i = 1; i <= 5; i++) {
+            System.out.print("Bogie " + i + ": ");
+            trainConsist.add(scanner.nextLine());
         }
 
-        System.out.println("\nFinal Unique Bogie IDs in System:");
-        System.out.println(bogieIds);
-        System.out.println("Total Unique Bogies Registered: " + bogieIds.size());
+        System.out.println("\nInitial Train Consist:");
+        System.out.println(trainConsist);
 
-        System.out.println("\nUC3 operations completed successfully...");
+        // 2. Positional Insertion
+        System.out.print("\nEnter a special bogie to insert at position 2 (e.g., Pantry Car): ");
+        String specialBogie = scanner.nextLine();
+        trainConsist.add(2, specialBogie);
+
+        System.out.println("After Inserting '" + specialBogie + "' at position 2:");
+        System.out.println(trainConsist);
+
+        // 3. Removing First and Last
+        System.out.println("\nDetaching the first and last bogies for maintenance...");
+        if (!trainConsist.isEmpty()) {
+            String first = trainConsist.removeFirst();
+            System.out.println("Removed First: " + first);
+        }
+        if (!trainConsist.isEmpty()) {
+            String last = trainConsist.removeLast();
+            System.out.println("Removed Last: " + last);
+        }
+
+        // Final State
+        System.out.println("\nFinal Ordered Train Consist:");
+        System.out.println(trainConsist);
+
+        System.out.println("\nUC4 ordered consist operations completed...");
         scanner.close();
     }
 }
