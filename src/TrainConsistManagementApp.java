@@ -1,6 +1,8 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 public class TrainConsistManagementApp {
 
@@ -11,49 +13,35 @@ public class TrainConsistManagementApp {
         System.out.println("   === Train Consist Management App ===");
         System.out.println("==========================================\n");
 
-        List<String> trainConsist = new ArrayList<>();
-        System.out.println("Train initialized successfully...");
-        System.out.println("Initial Bogie Count : " + trainConsist.size() + "\n");
+        // UC1 & UC2: List Management
+        List<String> passengerBogies = new ArrayList<>();
+        passengerBogies.add("Sleeper");
+        passengerBogies.add("First Class");
 
+        // UC3: Unique Bogie ID Tracking (HashSet)
         System.out.println("==========================================");
-        System.out.println(" UC2 - Add Passenger Bogies to Train ");
+        System.out.println(" UC3 - Track Unique Bogie IDs (HashSet) ");
         System.out.println("==========================================\n");
 
-        List<String> passengerBogies = new ArrayList<>();
+        Set<String> bogieIds = new HashSet<>();
 
-        // USER INPUT: Adding Bogies
-        System.out.println("Enter names of 3 passenger bogies to add:");
-        for (int i = 1; i <= 3; i++) {
-            System.out.print("Bogie " + i + ": ");
-            String bogie = scanner.nextLine();
-            passengerBogies.add(bogie);
+        System.out.println("Enter 4 Bogie IDs (Try entering a duplicate to test):");
+        for (int i = 1; i <= 4; i++) {
+            System.out.print("Enter ID for Bogie " + i + ": ");
+            String id = scanner.nextLine();
+
+            // add() returns false if the element is already present
+            boolean isAdded = bogieIds.add(id);
+            if (!isAdded) {
+                System.out.println("--> Alert: Duplicate ID '" + id + "' ignored by System!");
+            }
         }
 
-        System.out.println("\nAfter Adding Bogies:");
-        System.out.println("Passenger Bogies : " + passengerBogies + "\n");
+        System.out.println("\nFinal Unique Bogie IDs in System:");
+        System.out.println(bogieIds);
+        System.out.println("Total Unique Bogies Registered: " + bogieIds.size());
 
-        // USER INPUT: Removing a Bogie
-        System.out.print("Enter the name of the bogie to remove: ");
-        String toRemove = scanner.nextLine();
-
-        if (passengerBogies.contains(toRemove)) {
-            passengerBogies.remove(toRemove);
-            System.out.println("After Removing '" + toRemove + "':");
-            System.out.println("Passenger Bogies : " + passengerBogies + "\n");
-        } else {
-            System.out.println("Bogie '" + toRemove + "' not found in consist.\n");
-        }
-
-        // USER INPUT: Checking Existence
-        System.out.print("Enter bogie name to check existence: ");
-        String toCheck = scanner.nextLine();
-        System.out.println("Contains " + toCheck + "? : " + passengerBogies.contains(toCheck) + "\n");
-
-        System.out.println("Final Train Passenger Consist:");
-        System.out.println(passengerBogies + "\n");
-
-        System.out.println("UC2 operations completed successfully...");
-
+        System.out.println("\nUC3 operations completed successfully...");
         scanner.close();
     }
 }
